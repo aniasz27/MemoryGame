@@ -3,7 +3,7 @@
 ## Campus Memory: a two player memory game
 ![game](https://github.com/aniasz27/MemoryGame/blob/master/game.png?raw=true)
 
-The multiplayer game based on the popular idea of the memory board game.
+A simple multiplayer game based on the popular board game idea of memory.
 
 ```git
 git clone https://github.com/aniasz27/MemoryGame.git
