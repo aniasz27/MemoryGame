@@ -1,0 +1,92 @@
+body
+{
+    background-color: #4E86BB;
+    color: #C8C6C6;
+    font-size: 24px;
+    text-align: center;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+#container
+{
+    width: 1366px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#logo
+{
+    width: 1366px;
+    font-size: 36px;
+    letter-spacing: 5px;
+    position: relative;
+}
+
+#logo::before
+{
+    content: url("../images/logo.png");
+    position: absolute;
+    left: 870px;
+    bottom: 50px;
+    animation: fadeIn 6s;
+
+}
+
+@keyframes fadeIn {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+#rules
+{
+    width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    font-style: italic;
+    background-color: #375e83;
+    border-radius: 15px;
+    padding: 5px;
+}
+
+#button
+{
+    margin: 50px;
+}
+
+button
+{
+    width: 180px;
+    height: 100px;
+    background-color: #0D489C;
+    border-radius: 15px;
+    border: 5px solid #0D489C;
+    font-size: 48px;
+    letter-spacing: 3px;
+}
+
+button:hover
+{
+    cursor: pointer;
+    color: #C8C6C6;
+    background-color: #012E71;
+    border: 5px solid #012E71;
+}
+
+.statics
+{
+    float: left;
+    width: 455px;
+}
+
+.statistics
+{
+    margin-left: 47px;
+    width: 300px;
+    background-color: #3d6db0;
+    border-radius: 100px;
+    padding: 30px;
+}

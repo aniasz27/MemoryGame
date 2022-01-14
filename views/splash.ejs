@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Memory: a two player memory game</title>
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/splash.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet" type="text/css">
+    <script src="javascripts/splash.js"></script>
+</head>
+<body>
+    <div id="container">
+        <div id="logo"><h1>Campus Memory</h1></div>
+
+        <div id="rules">
+            <h2 style="font-style: normal;">RULES</h2>
+            <p>
+                Pick two different cards.<br>
+                If they match, you get points.<br>
+                Otherwise your opponent plays.
+            </p>
+        </div>
+
+        <div id="button">
+            <a href="game.html">
+                <form action="/play" method="get">
+                    <button type="submit">PLAY</button>
+                </form>
+            </a>
+        </div>
+
+        <div class="statics" id="completed">
+            <div class="statistics">
+                Games completed:<br><%= gamesCompleted %>
+            </div>
+        </div>
+
+        <div class="statics" id="ongoing">
+            <div class="statistics">
+                Games ongoing:<br><%= gamesOngoing %>
+            </div>
+        </div>
+
+        <div class="statics" id="score">
+            <div class="statistics">
+                Highest score:<br><%= highestScore %>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
