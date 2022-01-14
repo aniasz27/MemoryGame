@@ -12,8 +12,10 @@ let no = new Audio("audio/no.wav");
 const ws = new WebSocket("ws://localhost:3000")
 ws.addEventListener("open", () => console.log("We are connected!"))
 
+//wait for the message from the server
 ws.addEventListener("message", msg => {
     msg = JSON.parse(msg.data)
+    //based on the header do something
     switch (msg.header) {
     case messages.START:
         alert("The game has started!")
@@ -21,26 +23,31 @@ ws.addEventListener("message", msg => {
         player = msg.body.player
         show()
         break
+
     case messages.WAITING:
         alert("Waiting for the other player!")
         break
+        
     case messages.TERMINATION:
         player = true
         opponent = msg.body.point
         show()
         revealCards(msg.body.no_match)
         break
+
     case messages.END:
         opponent = msg.body.point
         end()
         show()
         break
+
     case messages.PAIR:
         opponent = msg.body.point
         pairs = msg.body.pairs
         show()
         removeCards(msg.body.match)
         break
+
     case messages.DISCONNECT:
         alert("The player disconnected!")
         player = false
@@ -48,17 +55,20 @@ ws.addEventListener("message", msg => {
     }
 });
 
+//remove cards that player successfully matched
 function removeCards(removed)
 {
     cardReveal(removed[0], removed[1])
     setTimeout(() => hide(removed[0], removed[1]), 750)
 }
 
+//reveal cards that player picked
 function revealCards(no_match){
     cardReveal(no_match[0], no_match[1])
     setTimeout(() => restore(no_match[0], no_match[1]), 1000)
 }
 
+//first reveal cards then hide them
 function cardReveal(nr1, nr2)
 {
     let photo = "url(images/" + cards[nr1] + ".png);";
@@ -69,6 +79,7 @@ function cardReveal(nr1, nr2)
     document.getElementById("c" + nr2).className = "cardActive";
 }
 
+//reveal card that player click
 function reveal(nr)
 {
     if (!player)
@@ -127,6 +138,7 @@ function reveal(nr)
     }
 }
 
+//delete the cards that player successfully matched
 function hide(nr1, nr2)
 {
     document.getElementById("c"+nr1).setAttribute("style", "opacity: 0");
@@ -152,6 +164,7 @@ function hide(nr1, nr2)
     }
 }
 
+//show the result
 function end()
 {
     if(you>opponent)
@@ -162,6 +175,7 @@ function end()
         document.getElementById("board").innerHTML = "<h2>You lost!<br>Opponent won!</h2>";
 }
 
+//hide the cards that player successfully matched
 function restore(nr1, nr2)
 {
     document.getElementById("c"+nr1).setAttribute("style", "background-image: url(images/card.png);");
@@ -172,6 +186,7 @@ function restore(nr1, nr2)
     show();
 }
 
+//show the points
 function show()
 {
     document.getElementById("you").innerHTML = `YOU<br>Score:<br>${you}`;

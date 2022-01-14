@@ -22,6 +22,7 @@ const wss = new wsLib.WebSocketServer({ server })
 let games = []
 let gamers = new Map()
 
+//shuffle the array
 function shuffle(array)
 {
 	let currentIndex = array.length, randomIndex
@@ -34,29 +35,35 @@ function shuffle(array)
 	return array
 }
 
+//send the message to the player and also print the message in the console
 const send = (ws, msg) =>
 {
 	console.log(`>>> (${ ws.id })`, msg)
 	ws.send(JSON.stringify(msg))
 }
 
+//generate unique ID for the game
 const generateID = () => crypto.randomBytes(8).toString('hex')
 
+//add player to the game
 const addPlayerToGame = (ws, game) =>
 {
 	gamers.set(ws, game)
 	console.log(`Added ${ ws.id } to game ${ game.id }`)
 }
 
+//print in the console numbers of the games being played and games in total
 setInterval(() =>
 {
 	console.log('there are', gameStatus.gamesOngoing, 'games being played')
 	console.log('there are', games.length, 'games in total')
-}, 5000)
+}, 10000)
 
+//wait for the connection from the player
 wss.on("connection", ws => {
 	ws.id = generateID()
 	let game
+	//add the player to the game if there is a game with only one player
 	for (const g of games) {
 		if (g.player2 != null) continue
 		game = g
@@ -82,6 +89,7 @@ wss.on("connection", ws => {
 		break
 	}
 
+	//if all games are full, create a new one and add a player
 	if (typeof game == "undefined") {
 		const game = { player1: ws, ongoing: false, id: generateID() }
 		games.push(game)
@@ -89,23 +97,18 @@ wss.on("connection", ws => {
 		send(ws, { header: messages.WAITING })
 	}
 
+	//if player disconnects
 	ws.on("close", () => {
 		const game = gamers.get(ws)
 		if (game == null) return
-		if (!game.ongoing)
-		{
-			// Remove this game because player 1 disconnected
-			// and it is no longer waiting for player 2.
-			games = games.filter(g => g != game)
-			return
+		//send the message to the other player that player disconnected
+		if(game.ongoing){
+			send(game.player1 == ws ? game.player2 : game.player1, {header: messages.DISCONNECT})
+			gameStatus.gamesOngoing--
 		}
-
-		send(game.player1 == ws ? game.player2 : game.player1, {header: messages.DISCONNECT})
-
-		// Remove this game because a player disconnected.
+		//remove this game because a player disconnected
 		games = games.filter(g => g != game)
 		game.ongoing = false
-		gameStatus.gamesOngoing--
 	})
 
 	ws.on("message", msg =>
@@ -113,78 +116,32 @@ wss.on("connection", ws => {
 		const game = gamers.get(ws)
 		msg = JSON.parse(msg)
 
-		if (game == null)
-		{
-			send(ws, {
-				"wrong": "wrong"
-			})
-			return
-		}
+		if (game == null) return
 
+		//send the message to the other player based on header
 		switch (msg.header)
 		{
 			case messages.TERMINATION:
-			{
-				if(game.player1 == ws)
-				{
-					send(game.player2, msg)
-				}
-				else
-				{
-					send(game.player1, msg)
-				}
-				
+				send(game.player1 == ws ? game.player2 : game.player1, msg)
 				break
-			}
 
 			case messages.END:
-			{
-				if(game.player1 == ws)
-				{
-					send(game.player2, msg)
-				}
-				else
-				{
-					send(game.player1, msg)
-					games = games.filter(g => g != game)
-					gameStatus.gamesOngoing--
-					gameStatus.gamesCompleted++
-					game.ongoing = false
-				}
-
+				send(game.player1 == ws ? game.player2 : game.player1, msg)
+				games = games.filter(g => g != game)
+				gameStatus.gamesOngoing--
+				gameStatus.gamesCompleted++
+				game.ongoing = false
 				break
-			}
 
 			case messages.PAIR:
-			{
-				if(game.player1 == ws)
-				{
-					send(game.player2, msg)
-				}
-				else
-				{
-					send(game.player1, msg)
-				}
-
+				send(game.player1 == ws ? game.player2 : game.player1, msg)
 				break
-			}
 
 			case messages.STATICS:
-			{
 				let first = msg.body.you
 				let second = msg.body.opponent
-
-				if(first>second)
-				{
-					gameStatus.highestScore = first
-				}
-				else
-				{
-					gameStatus.highestScore = second
-				}
-
+				gameStatus.highestScore = first>second ? first : second
 				break
-			}
 		}
 	})
 })
