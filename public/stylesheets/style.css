@@ -1,8 +1,60 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+body
+{
+    background-color: #4E86BB;
+    color: #C8C6C6;
+    font-size: 24px;
+    text-align: center;
+    font-family: 'Ubuntu', sans-serif;
 }
 
-a {
-  color: #00B7FF;
+#container
+{
+    width: 1366px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#logo
+{
+    width: 1366px;
+    font-size: 36px;
+    letter-spacing: 5px;
+    position: relative;
+}
+
+#logo::before
+{
+    content: url("../images/logo.png");
+    position: absolute;
+    left: 870px;
+    bottom: 50px;
+    animation: fadeIn 6s;
+
+}
+
+@keyframes fadeIn {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+@media (max-width: 749px), (max-height: 749px) {
+  body::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    color: white;
+    padding: 20px;
+    content: "Your window is too small (at least 750x750px is expected) to play this game.\a Enlarge the browser window or zoom out to play or disable the CSS @media query.";
+    white-space: pre;
+    background-color: black;
+    z-index: 100;
+  }
 }
