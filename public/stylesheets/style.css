@@ -26,6 +26,16 @@ body
 {
     content: url("../images/logo.png");
     position: absolute;
+    left: 425px;
+    bottom: 50px;
+    animation: fadeIn 6s;
+
+}
+
+#logo::after
+{
+    content: url("../images/logo.png");
+    position: absolute;
     left: 870px;
     bottom: 50px;
     animation: fadeIn 6s;

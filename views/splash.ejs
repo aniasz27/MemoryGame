@@ -15,7 +15,7 @@
         <div id="logo"><h1>Campus Memory</h1></div>
 
         <div id="rules">
-            <h2 style="font-style: normal;">RULES</h2>
+            <h2 style="font-style: normal;"><a href="https://en.wikipedia.org/wiki/Concentration_(card_game)" title="Concentration">RULES</a></h2>
             <p>
                 Pick two different cards.<br>
                 If they match, you get points.<br>
@@ -31,20 +31,16 @@
             </a>
         </div>
 
-        <div class="statics" id="completed">
-            <div class="statistics">
+        <div class="bottom">
+            <div class="statics" id="completed">
                 Games completed:<br><%= gamesCompleted %>
             </div>
-        </div>
-
-        <div class="statics" id="ongoing">
-            <div class="statistics">
+    
+            <div class="statics" id="ongoing">
                 Games ongoing:<br><%= gamesOngoing %>
             </div>
-        </div>
-
-        <div class="statics" id="score">
-            <div class="statistics">
+    
+            <div class="statics" id="score">
                 Highest score:<br><%= highestScore %>
             </div>
         </div>

@@ -35,11 +35,26 @@
 {
     width: 125px;
     height: 125px;
-    display: inline-block;
-    margin: 3px;
+    display: grid;
+    grid-template-columns: 125px;
+    float: left;
+    margin: 7px;
     background-color: #0D489C;
     background-image: url("../images/card.png");
     border: 4px solid gray;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.card:active
+{
+    width: 125px;
+    height: 125px;
+    display: grid;
+    grid-template-columns: 125px;
+    float: left;
+    margin: 7px;
+    border: 4px solid black;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -48,8 +63,10 @@
 {
     width: 125px;
     height: 125px;
-    display: inline-block;
-    margin: 3px;
+    display: grid;
+    grid-template-columns: 125px;
+    float: left;
+    margin: 7px;
     border: 4px solid white;
     border-radius: 5px;
     cursor: default;
