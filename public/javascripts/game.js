@@ -9,6 +9,18 @@ let opponent = 0;
 let yes = new Audio("audio/yes.wav");
 let no = new Audio("audio/no.wav");
 
+let cardEvent = document.getElementsByClassName("card")
+for(let c of cardEvent)
+{
+    c.addEventListener("click", addEvent)
+}
+
+function addEvent()
+{
+    let times = parseInt(this.id.substring(1))
+    reveal(times)
+}
+
 const ws = new WebSocket("ws://localhost:3000")
 ws.addEventListener("open", () => console.log("We are connected!"))
 

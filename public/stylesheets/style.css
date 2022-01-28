@@ -29,7 +29,6 @@ body
     left: 425px;
     bottom: 50px;
     animation: fadeIn 6s;
-
 }
 
 #logo::after
@@ -39,7 +38,6 @@ body
     left: 870px;
     bottom: 50px;
     animation: fadeIn 6s;
-
 }
 
 @keyframes fadeIn {
